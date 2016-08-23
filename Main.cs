@@ -140,7 +140,7 @@ namespace winsw
 
             LogHandler logAppender = _descriptor.LogHandler;
             logAppender.EventLogger = this;
-            logAppender.log(_process.StandardOutput.BaseStream, _process.StandardError.BaseStream);
+            //logAppender.log(_process.StandardOutput.BaseStream, _process.StandardError.BaseStream);
         }
 
         public void LogEvent(String message)
@@ -246,7 +246,7 @@ namespace winsw
             // send stdout and stderr to its respective output file.
             HandleLogfiles();
 
-            _process.StandardInput.Close(); // nothing for you to read!
+            //_process.StandardInput.Close(); // nothing for you to read!
         }
 
         protected override void OnShutdown()
@@ -447,10 +447,10 @@ namespace winsw
             ps.Arguments = arguments;
             ps.WorkingDirectory = _descriptor.WorkingDirectory;
             ps.CreateNoWindow = false;
-            ps.UseShellExecute = false;
-            ps.RedirectStandardInput = true; // this creates a pipe for stdin to the new process, instead of having it inherit our stdin.
-            ps.RedirectStandardOutput = true;
-            ps.RedirectStandardError = true;
+            ps.UseShellExecute = true;
+            ps.RedirectStandardInput = false; // this creates a pipe for stdin to the new process, instead of having it inherit our stdin.
+            ps.RedirectStandardOutput = false;
+            ps.RedirectStandardError = false;
 
             foreach (string key in _envs.Keys)
                 Environment.SetEnvironmentVariable(key, _envs[key]);
